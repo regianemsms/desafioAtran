@@ -1,4 +1,4 @@
-package com.altran.CarrinhoDeComprasApi;
+package com.altran.desafio.CarrinhoDeComprasApi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
