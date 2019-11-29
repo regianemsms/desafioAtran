@@ -21,7 +21,6 @@ formulario: FormGroup;
 
   ngOnInit() {
     this.formulario = this.createForm();
-    this.service.insert('teste', this.formulario);
   }
 
   private createForm(): FormGroup {
@@ -33,7 +32,7 @@ formulario: FormGroup;
   }
 
   salvar(){
-
+    this.service.insert('usuario', this.formulario);
     this.location.back();
   }
 }

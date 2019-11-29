@@ -10,7 +10,6 @@ import {AccordionModule} from 'primeng/accordion';
 import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {StepsModule} from 'primeng/steps';
-import { ItemComponent } from './item/item.component';
 import { CarrinhoComponent } from './carrinho/carrinho.component';
 import { BodyHomeComponent } from './body-home/body-home.component';
 import { UsuarioComponent } from './usuario/usuario-form/usuario-form.component';
@@ -18,6 +17,9 @@ import {ToolbarModule} from 'primeng/toolbar';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CrudService } from './services/crud.service';
+import {TabMenuModule} from 'primeng/tabmenu';
+import { ItemListComponent } from './item/item-list/item-list.component';
+import { ItemComponent } from './item/item-form/item-form.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { CrudService } from './services/crud.service';
     CarrinhoComponent,
     BodyHomeComponent,
     UsuarioListComponent,
+    ItemListComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { CrudService } from './services/crud.service';
     ButtonModule,
     StepsModule,
     ToolbarModule,
-    HttpClientModule
+    HttpClientModule,
+    TabMenuModule,
 
   ],
   providers: [FormBuilder,
