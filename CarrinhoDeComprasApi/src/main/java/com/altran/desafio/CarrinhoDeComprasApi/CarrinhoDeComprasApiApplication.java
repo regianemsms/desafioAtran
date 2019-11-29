@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class CarrinhoDeComprasApiApplication {
 
 	public static void main(String[] args) {
+		  System.getProperties().put( "server.port", 8181 );
 		SpringApplication.run(CarrinhoDeComprasApiApplication.class, args);
 	}
 

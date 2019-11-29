@@ -11,19 +11,20 @@ export class CrudService {
   constructor(private http: HttpClient) { }
 
   list(path: string): Observable<any> {
-    return this.http.get(`${environment.apiUrl}ws/${path}`);
+    const url = `${environment.apiUrl}${path}`;
+    return this.http.get(url);
   }
 
   insert(path: string, entity: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}ws/${path}`, entity);
+    return this.http.post(`${environment.apiUrl}${path}`, entity);
   }
 
   update(path: string, entity: any): Observable<any> {
-    return this.http.put(`${environment.apiUrl}ws/${path}`, entity);
+    return this.http.put(`${environment.apiUrl}${path}`, entity);
   }
 
   delete(path: string, id: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}ws/${path}/${id}`);
+    return this.http.delete(`${environment.apiUrl}${path}/${id}`);
   }
 
   joinRequests(requests: Observable<any>[]): Observable<any[]> {

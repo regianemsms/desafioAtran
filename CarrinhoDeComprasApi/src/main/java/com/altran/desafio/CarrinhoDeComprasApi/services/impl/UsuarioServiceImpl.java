@@ -46,6 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario save(Usuario usuario) {
 		return repository.save(usuario);
 	}
+	
 
 	@Override
 	public void delete(String id) {

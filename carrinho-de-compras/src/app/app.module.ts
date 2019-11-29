@@ -1,6 +1,7 @@
 import { UsuarioListComponent } from './usuario/usuario-list/usuario-list.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -38,7 +39,9 @@ import { ItemComponent } from './item/item-form/item-form.component';
     BrowserAnimationsModule,
     AccordionModule,
     CardModule,
+    ReactiveFormsModule,
     ButtonModule,
+    FormsModule,
     StepsModule,
     ToolbarModule,
     HttpClientModule,
