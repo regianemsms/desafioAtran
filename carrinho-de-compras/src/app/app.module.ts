@@ -23,6 +23,8 @@ import { ItemComponent } from './item/item-form/item-form.component';
 import {TabMenuModule} from 'primeng/tabmenu';
 import {TableModule} from 'primeng/table';
 import {MessageService} from 'primeng/api';
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 
 
@@ -50,7 +52,9 @@ import {MessageService} from 'primeng/api';
     ToolbarModule,
     HttpClientModule,
     TabMenuModule,
-    TableModule
+    TableModule,
+    DropdownModule,
+    MultiSelectModule
   ],
   providers: [FormBuilder,
     HttpClient,

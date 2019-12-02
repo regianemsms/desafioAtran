@@ -1,1 +1,28 @@
-<p>carrinho works!</p>
+<p-card class="card">
+    <div class="ui-card-title"> Carrinho de Compras</div>
+    <form [formGroup]="formulario">
+        <p-toolbar>
+            <div class="p-col-12 p-md-6 p-lg-6 ui-fluid">
+                <p-dropdown [options]="usuarios" placeholder="Selecione" optionLabel="nome" [showClear]="true"
+                    filter="true" emptyFilterMessage="Nenhum usuário encontrado" formControlName="usuario"></p-dropdown>
+            </div>
+        </p-toolbar>
+        <p-toolbar  *ngIf="existsUser()">
+            <div class="p-grid p-align-start">
+                <div class="p-col-12 p-md-3 p-lg-3 p-xl-4 ui-fluid">
+                    <h5>Itens<b>(*)</b></h5>
+                    <p-dropdown [options]="itens" placeholder="Selecione" optionLabel="nome" [showClear]="true"
+                        filter="true" emptyFilterMessage="Nenhum item encontrado" formControlName="item">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-3 p-lg-3 p-xl-4 ui-fluid">
+                    <h5>Quantidade<b>(*)</b></h5>
+                    <input id="quantidade" required type="number" pInputText formControlName="quantidade">
+                </div>
+                <div class="p-col-11 p-md-2 p-lg-2 p-xl-1 ui-fluid">
+                    <button pButton type="button" (click)="add()" icon="pi pi-plus"></button>
+                </div>
+            </div>
+        </p-toolbar>
+    </form>
+</p-card>

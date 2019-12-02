@@ -13,7 +13,7 @@ export class UsuarioListComponent implements OnInit {
   usuarios: Usuario[];
   cols: any[];
   searchForm: FormGroup;
-  path: string = 'usuario';
+  path = 'usuario';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,31 +25,27 @@ export class UsuarioListComponent implements OnInit {
     this.list();
   }
 
-
-  loadTable(){
+  loadTable() {
     this.cols = [
       { field: 'nome', header: 'Nome' },
       { field: 'email', header: 'E-mail' },
   ];
   }
 
-  list(){
+  list() {
     this.service.list(this.path).subscribe( data =>
       this.usuarios = data,
-      () => alert('Erro ao buscar usuarios!'))
+      () => alert('Erro ao buscar usuarios!'));
   }
 
-  update(){
-
-  }
-   delete(usuario : Usuario){
+   delete(usuario: Usuario) {
     if (confirm('Deseja realmente excluir este item?')) {
       this.service
         .delete(this.path, usuario.id)
         .subscribe(
           async () => ( await this.list,
           () => alert('Erro ao tentar excluir!')
-        ))
+        ));
     }
   }
 }

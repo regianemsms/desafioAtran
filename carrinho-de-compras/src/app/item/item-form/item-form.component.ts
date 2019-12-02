@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ItemComponent implements OnInit {
 
   formulario: FormGroup;
-  path: string = 'item';
+  path = 'item';
   item: Item;
 
   constructor(

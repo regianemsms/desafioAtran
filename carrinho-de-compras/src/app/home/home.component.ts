@@ -9,18 +9,17 @@ import { MenuItem } from 'primeng/components/common/menuitem';
 })
 export class HomeComponent implements OnInit {
   
-  items: MenuItem[];
+  itensMenu: MenuItem[];
   
   constructor(
     private router: Router,
   ) { }
 
   ngOnInit() {
-      this.items = [
-          {label: 'Usuário', routerLink:'usuariolist'},
-          {label: 'Carrinho', routerLink:'carrinho'},
-          {label: 'Itens', routerLink:'itemlist '},
-          
+      this.itensMenu = [
+          {label: 'Usuário', routerLink: 'usuariolist'},
+          {label: 'Carrinho', routerLink: 'carrinho'},
+          {label: 'Itens', routerLink: 'itemlist'},
       ];
   }
 }

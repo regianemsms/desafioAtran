@@ -1,12 +1,15 @@
-<div class="ui-card-title"> Usuários</div>
 <p-card class="card">
+    <br />
+    <div class="ui-card-title"> Usuários</div>
+    <br />
     <p-toolbar>
-
+        <br />
         <div class="p-grid p-align-end p-justify-end">
             <a routerLink="/usuario">
                 <button pButton type="button" label="Incluir" icon="pi pi-plus"></button>
             </a>
         </div>
+        <br />
         <div class="p-grid p-align-end p-justify-end">
             <p-table [columns]="cols" [value]="usuarios">
                 <ng-template pTemplate="header" let-columns>

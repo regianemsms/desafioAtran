@@ -45,7 +45,8 @@ public class UsuarioController {
 	}
 	@GetMapping
 	public List<Usuario> listar() {
-		return this.service.findAll();
+		 List<Usuario> lista = this.service.findAll();
+		return lista;
 	}
 
 	@DeleteMapping(path = "/{id}")

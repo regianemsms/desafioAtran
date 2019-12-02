@@ -10,11 +10,10 @@ import { CrudService } from 'src/app/services/crud.service';
 })
 export class ItemListComponent implements OnInit {
 
-  
   itens: Item[];
   cols: any[];
   searchForm: FormGroup;
-  path: string = 'item';
+  path = 'item';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,29 +26,30 @@ export class ItemListComponent implements OnInit {
   }
 
 
-  loadTable(){
+  loadTable() {
     this.cols = [
       { field: 'nome', header: 'Nome' },
       { field: 'valor', header: 'Valor' },
   ];
   }
 
-  list(){
+  list() {
     this.service.list(this.path).subscribe( data =>
       this.itens = data,
-      () => alert('Erro ao buscar usuarios!'))
+      () => alert('Erro ao buscar usuarios!'));
   }
 
-  update(){
+  update() {
 
   }
-   delete(item : Item){
+
+   delete(item: Item) {
     if (confirm('Deseja realmente excluir este item?')) {
       this.service
         .delete(this.path, item.id)
         .subscribe(
           async () => ( await this.list,
           () => alert('Erro ao tentar excluir!')
-        ))
-    }
+        ));
+      }
   }}

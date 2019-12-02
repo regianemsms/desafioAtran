@@ -1,11 +1,13 @@
-<div class="ui-card-title"> Itens</div>
 <p-card class="card">
     <p-toolbar>
+            <div class="ui-card-title"> Itens</div>
+        <br />
         <div class="p-grid p-align-end p-justify-end">
             <a routerLink="/item">
                 <button pButton type="button" label="Incluir" icon="pi pi-plus"></button>
             </a>
         </div>
+        <br />
         <div class="p-grid p-align-end p-justify-end">
             <p-table [columns]="cols" [value]="itens">
                 <ng-template pTemplate="header" let-columns>

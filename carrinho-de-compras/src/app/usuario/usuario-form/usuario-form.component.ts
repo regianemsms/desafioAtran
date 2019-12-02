@@ -13,7 +13,7 @@ import {MessageService} from 'primeng/api';
 })
 export class UsuarioComponent implements OnInit {
   formulario: FormGroup;
-  path: string = 'usuario';
+  path = 'usuario';
   usuario: Usuario;
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -30,7 +30,7 @@ export class UsuarioComponent implements OnInit {
     this.updateVerify();
   }
 
-  updateVerify(){
+  updateVerify() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.service.findById(this.path, id).subscribe(
@@ -48,7 +48,7 @@ export class UsuarioComponent implements OnInit {
       id: [null],
       nome: [null],
       email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
-      carrinho:[null]
+      carrinho: [null]
     });
   }
   salvar() {
@@ -63,6 +63,4 @@ export class UsuarioComponent implements OnInit {
       }
     );
   }
-
- 
 }
