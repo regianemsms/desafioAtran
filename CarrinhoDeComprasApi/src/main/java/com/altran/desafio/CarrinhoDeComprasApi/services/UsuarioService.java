@@ -11,9 +11,9 @@ public interface UsuarioService {
 
 	Usuario findById(String id) ;
     
-	Usuario save(Usuario usuario) ;
+	Usuario save(Usuario modal) ;
     
 	void delete(String id);
     
-	Optional<List<Usuario>> findByNome(String nome);
+	Optional<List<Usuario>> findByName(String name);
 }

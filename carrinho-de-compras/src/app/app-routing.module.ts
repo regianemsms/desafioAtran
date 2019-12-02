@@ -1,3 +1,4 @@
+import { ItemListComponent } from './item/item-list/item-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -10,9 +11,13 @@ import { ItemComponent } from './item/item-form/item-form.component';
 
 export const routes: Routes = [
   {path: '', component: BodyHomeComponent},
-  {path: 'usuarioForm', component: UsuarioComponent},
+  {path: 'usuario', component: UsuarioComponent},
+  {path: 'usuario/:id', component: UsuarioComponent},
   {path: 'usuariolist', component: UsuarioListComponent},
   {path: 'item', component: ItemComponent},
+  {path: 'item/:id', component: ItemComponent},
+  {path: 'itemlist', component: ItemListComponent},
+
   {path: 'carrinho', component: CarrinhoComponent}
   ];
   

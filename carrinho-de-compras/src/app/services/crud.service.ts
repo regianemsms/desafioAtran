@@ -15,16 +15,16 @@ export class CrudService {
     return this.http.get(url);
   }
 
-  insert(path: string, entity: any): Observable<any> {
+  save(path: string, entity: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}${path}`, entity);
   }
 
-  update(path: string, entity: any): Observable<any> {
-    return this.http.put(`${environment.apiUrl}${path}`, entity);
+  delete(path: string, id: string): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}${path}/${id}`);
   }
 
-  delete(path: string, id: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}${path}/${id}`);
+  findById(path: string, id: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}${path}/${id}`);
   }
 
   joinRequests(requests: Observable<any>[]): Observable<any[]> {

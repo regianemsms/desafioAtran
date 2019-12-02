@@ -1,1 +1,26 @@
-<p>item works!</p>
+<div class="ui-card-title">Incluir</div>
+<p-card>
+    <form [formGroup]="formulario">
+        <div class="p-grid p-align-end">
+            <div class="p-col-12 p-md-6 p-lg-6 ui-fluid">
+                <h5>Nome <span class="required">*</span></h5>
+                <input id="nome" type="text" size="80%" pInputText maxlength="100" formControlName="nome">
+            </div>
+
+            <div class="p-col-12 p-md-6 p-lg-6 ui-fluid">
+                <h5>Valor <span class="required">*</span></h5>
+                <input id="valor" required type="text" size="80%" pInputText 
+                            maxlength="100" formControlName="valor">
+            </div>
+        </div>
+        <div class="p-grid p-align-end p-justify-end">
+            <div class="p-col-12 p-md-2 p-lg-2 p-xl-1 ui-fluid">
+                <a pButton label="Voltar" class="ui-button-warning" routerLink="../itemlist"></a>
+            </div>
+            <div class="p-col-12 p-md-2 p-lg-2 p-xl-1 ui-fluid">
+                <button pButton type="submit" label="Salvar" (click)="salvar()"></button>
+            </div>
+        </div>
+
+    </form>
+</p-card>

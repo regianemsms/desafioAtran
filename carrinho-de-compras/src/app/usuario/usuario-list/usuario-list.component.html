@@ -1,11 +1,40 @@
-<div class="ui-card-title">Usuários</div>
+<div class="ui-card-title"> Usuários</div>
 <p-card class="card">
-        <p-toolbar>
-            <div class="ui-toolbar-group-right">
-                <a routerLink="../usuarioForm">
-                    <button pButton type="button" label="Incluir" icon="pi pi-plus"></button>
-                </a>
-            </div>
-        </p-toolbar>
-       
-    </p-card>
+    <p-toolbar>
+
+        <div class="p-grid p-align-end p-justify-end">
+            <a routerLink="/usuario">
+                <button pButton type="button" label="Incluir" icon="pi pi-plus"></button>
+            </a>
+        </div>
+        <div class="p-grid p-align-end p-justify-end">
+            <p-table [columns]="cols" [value]="usuarios">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{user[col.field]}}
+                        </td>
+                        <td>
+                            <a [routerLink]="['/usuario',user.id]">
+                                <button pButton type="button" icon="pi pi-user-edit"></button>
+                            </a>
+                        </td>
+                        <td>
+                            <button pButton type="button" (click)="delete(user)" icon="pi pi-trash"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-toolbar>
+
+</p-card>

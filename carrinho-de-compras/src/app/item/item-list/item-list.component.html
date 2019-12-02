@@ -1,1 +1,39 @@
-<p>item-list works!</p>
+<div class="ui-card-title"> Itens</div>
+<p-card class="card">
+    <p-toolbar>
+        <div class="p-grid p-align-end p-justify-end">
+            <a routerLink="/item">
+                <button pButton type="button" label="Incluir" icon="pi pi-plus"></button>
+            </a>
+        </div>
+        <div class="p-grid p-align-end p-justify-end">
+            <p-table [columns]="cols" [value]="itens">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{item[col.field]}}
+                        </td>
+                        <td>
+                            <a [routerLink]="['/item',item.id]">
+                                <button pButton type="button" icon="pi pi-pencil"></button>
+                            </a>
+                        </td>
+                        <td>
+                            <button pButton type="button" (click)="delete(item)" icon="pi pi-trash"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-toolbar>
+
+</p-card>

@@ -18,9 +18,13 @@ import {ToolbarModule} from 'primeng/toolbar';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CrudService } from './services/crud.service';
-import {TabMenuModule} from 'primeng/tabmenu';
 import { ItemListComponent } from './item/item-list/item-list.component';
 import { ItemComponent } from './item/item-form/item-form.component';
+import {TabMenuModule} from 'primeng/tabmenu';
+import {TableModule} from 'primeng/table';
+import {MessageService} from 'primeng/api';
+
+
 
 @NgModule({
   declarations: [
@@ -46,11 +50,12 @@ import { ItemComponent } from './item/item-form/item-form.component';
     ToolbarModule,
     HttpClientModule,
     TabMenuModule,
-
+    TableModule
   ],
   providers: [FormBuilder,
     HttpClient,
-    CrudService],
+    CrudService,
+    MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

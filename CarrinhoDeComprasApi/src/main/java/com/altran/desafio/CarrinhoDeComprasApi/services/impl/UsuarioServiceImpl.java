@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Optional<List<Usuario>> findByNome(String nome) {
+	public Optional<List<Usuario>> findByName(String nome) {
 		return repository.findByNomeIgnoreCaseContaining(nome);
 	}
 
