@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Item } from '../model/item.model';
+import { Produto } from '../model/produto.model';
 
 @Component({
   selector: 'app-carrinho',
@@ -17,12 +18,14 @@ import { Item } from '../model/item.model';
 export class CarrinhoComponent implements OnInit {
   formulario: FormGroup;
   pathUsuario = 'usuario';
-  pathCarrinho = 'carrinho';
   pathItem = 'item';
   usuario: Usuario = new Usuario();
   usuarios: Usuario[];
   itens: Item[];
   quantidade: number;
+  cols: any[];
+  mapItens: Map<number, Item> = new Map();
+  produto : Produto = new Produto;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,25 +38,28 @@ export class CarrinhoComponent implements OnInit {
   ngOnInit() {
     this.formulario = this.createForm();
     this.formulario.valueChanges.subscribe(
-      data => console.log(data)
+     data => console.log(data)
     );
     this.listarItens();
     this.listarUsuarios();
+    this.loadTable();
   }
   existsUser() {
-   if (this.formulario.get('usuario').value) {
-     return this.formulario.get('usuario').get('id').value ? true : false;
-   }
-   return false;
-
+    if (this.formulario.get('usuario').value) {
+      return this.formulario.get('usuario').get('id').value ? true : false;
+    }
+    return false;
   }
+
   private createForm(): FormGroup {
     return this.formBuilder.group({
         usuario :  this.formBuilder.group({
         id: [null],
         nome: [null],
         email: [null],
-        carrinho: [null]
+        carrinho: this.formBuilder.group({
+          produtos: [null]
+        }),   
        }),
        quantidade: [null],
        item:  this.formBuilder.group({
@@ -61,6 +67,7 @@ export class CarrinhoComponent implements OnInit {
           nome: [null],
           valor: [null]
       }),
+      mapItens: []
     });
   }
   listarUsuarios() {
@@ -78,22 +85,34 @@ export class CarrinhoComponent implements OnInit {
     );
   }
   add() {
-    const mapItens = new Map();
-    mapItens.set(this.formulario.get('quantidade').value, this.formulario.get('item').value);
     this.usuario =  this.formulario.get('usuario').value;
     this.usuario.carrinho = new Carrinho();
-    this.usuario.carrinho.itens =  [...mapItens].reduce((o, [key, value]) => (o[key] = value, o), {});
+    this.usuario.carrinho.produtos = [];
+
+    this.produto.item = this.formulario.get('item').value;
+    this.produto.quantidade = this.formulario.get('quantidade').value;
+    this.usuario.carrinho.produtos = [this.produto];
     this.salvar();
   }
-
-  salvar() {
-    this.service.save(this.pathUsuario, this.usuario).subscribe(
-      async data => {
-
+  
+  async salvar() {
+    await this.service.save(this.pathUsuario, this.usuario).subscribe(
+      data => {
+        console.log(data);
       },
       err => {
         console.log(err);
       }
     );
+     this.formulario.get('usuario').patchValue(this.service.findById(this.pathUsuario, this.usuario.id));
+     console.log(this.formulario.value);
+  }
+  
+  loadTable() {
+    this.cols = [
+      { field: 'quantidade', header: 'Quantidade' },
+     // { field: 'item', header: 'Nome' },
+      //{ field: 'item', header: 'Valor' }
+  ];
   }
 }

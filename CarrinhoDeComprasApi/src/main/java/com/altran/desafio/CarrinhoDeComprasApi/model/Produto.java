@@ -1,8 +1,5 @@
 package com.altran.desafio.CarrinhoDeComprasApi.model;
 
-
-import java.util.List;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -15,11 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-@Document(collection = "carrinho")
-public class Carrinho {
-	
-	  private List<Produto> produtos;
+@Document(collection = "produto")
+public class Produto {
 
-	
+	private Item item;
+	private Integer quantidade;
 
 }

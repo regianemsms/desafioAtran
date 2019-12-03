@@ -12,7 +12,6 @@ export class ItemListComponent implements OnInit {
 
   itens: Item[];
   cols: any[];
-  searchForm: FormGroup;
   path = 'item';
 
   constructor(

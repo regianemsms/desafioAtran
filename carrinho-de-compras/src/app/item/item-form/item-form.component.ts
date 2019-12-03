@@ -23,14 +23,14 @@ export class ItemComponent implements OnInit {
     private msgService: MessageService,
     private location: Location,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formulario = this.createForm();
     this.updateVerify();
   }
 
-  updateVerify(){
+  updateVerify() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.service.findById(this.path, id).subscribe(
@@ -51,15 +51,18 @@ export class ItemComponent implements OnInit {
     });
   }
   salvar() {
-    this.service.save(this.path, this.formulario.value).subscribe(
-      async data => {
-         console.log(data);
-         await   this.location.back();
-
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    const valor = this.formulario.get('valor').value;
+    if (valor <= 0) {
+      alert('Valor não pode ser inferior a Zero');
+    } else {
+      this.service.save(this.path, this.formulario.value).subscribe(
+        data => {
+          this.location.back();
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
   }
 }

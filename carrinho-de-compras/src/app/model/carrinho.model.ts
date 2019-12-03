@@ -1,5 +1,5 @@
-import { Item } from './item.model';
+import { Produto } from './produto.model';
 
 export class Carrinho {
-  itens: any;
+  produtos: Produto[];
 }

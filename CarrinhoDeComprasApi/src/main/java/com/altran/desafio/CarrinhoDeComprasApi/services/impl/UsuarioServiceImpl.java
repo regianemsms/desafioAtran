@@ -1,12 +1,16 @@
 package com.altran.desafio.CarrinhoDeComprasApi.services.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.altran.desafio.CarrinhoDeComprasApi.exception.UsuarioInexistenteException;
+import com.altran.desafio.CarrinhoDeComprasApi.model.Produto;
 import com.altran.desafio.CarrinhoDeComprasApi.model.Usuario;
 import com.altran.desafio.CarrinhoDeComprasApi.repository.UsuarioRepository;
 import com.altran.desafio.CarrinhoDeComprasApi.services.UsuarioService;
@@ -44,10 +48,34 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	public Usuario save(Usuario usuario) {
-		return repository.save(usuario);
+		if(!StringUtils.isEmpty(usuario.getId())){
+			usuario = verificarCarrinho(usuario);
+		}
+		return  repository.save(usuario);
 	}
 	
 
+	private Usuario verificarCarrinho(Usuario usuario) {
+		Usuario userDb = this.findById(usuario.getId());
+		Produto prodTela = usuario.getCarrinho().getProdutos().get(0);
+		if(userDb.getCarrinho() != null && userDb.getCarrinho().getProdutos() != null) {
+			boolean isNotEqual = true;
+			for(Produto prod : userDb.getCarrinho().getProdutos()) {
+				if(prod.getItem().getId().equals(prodTela.getItem().getId())) {
+					prod.setQuantidade(prod.getQuantidade()+ prodTela.getQuantidade());
+					isNotEqual = false;
+					break;
+				}
+			}
+			if(isNotEqual) {
+				userDb.getCarrinho().getProdutos().add(prodTela);
+			}
+		}else {
+			userDb.getCarrinho().setProdutos(new ArrayList(Arrays.asList(prodTela)));
+		}
+		return userDb;
+	}
+	
 	@Override
 	public void delete(String id) {
 		if (this.findById(id) != null) {
