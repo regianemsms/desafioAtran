@@ -22,4 +22,12 @@ describe('ItemComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
+  it('Deve testar Exibição de Protocolo', () => {
+    component.protocolo.setValue('');
+    expect(component.protocolo.validator).toBeFalsy();
+    component.protocolo.setValue('123456789');
+    expect(component.protocolo).not.toBeNull();
+   });
 });

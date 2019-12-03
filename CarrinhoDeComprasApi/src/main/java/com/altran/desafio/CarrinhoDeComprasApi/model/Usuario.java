@@ -3,6 +3,7 @@ package com.altran.desafio.CarrinhoDeComprasApi.model;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +20,7 @@ import lombok.Setter;
 @Getter @Setter
 @Document(collection = "user")
 @EqualsAndHashCode
+@PropertySource("classpath:messages.properties")
 public class Usuario {
 
 	@Id

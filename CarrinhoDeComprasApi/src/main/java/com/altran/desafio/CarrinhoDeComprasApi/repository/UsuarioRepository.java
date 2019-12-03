@@ -9,7 +9,7 @@ import com.altran.desafio.CarrinhoDeComprasApi.model.Usuario;
 
 public interface UsuarioRepository extends MongoRepository<Usuario, String>{
 	
-	Optional<List<Usuario>> findByNome(String nome);
+	Usuario findByNome(String nome);
 	Optional<List<Usuario>> findByNomeIgnoreCaseContaining(String nome);
 
 }

@@ -7,6 +7,7 @@
                     filter="true" emptyFilterMessage="Nenhum usuário encontrado" formControlName="usuario"></p-dropdown>
             </div>
         </p-toolbar>
+
         <p-toolbar *ngIf="existsUser()">
             <div class="p-grid p-align-start">
                 <div class="p-col-12 p-md-3 p-lg-3 p-xl-4 ui-fluid">
@@ -17,40 +18,43 @@
                 </div>
                 <div class="p-col-12 p-md-3 p-lg-3 p-xl-4 ui-fluid">
                     <h5>Quantidade<b>(*)</b></h5>
+                    <div class="ui-inputgroup"></div>
                     <input id="quantidade" required type="number" pInputText formControlName="quantidade">
-                </div>
-                <div class="p-col-11 p-md-2 p-lg-2 p-xl-1 ui-fluid">
-                    <button pButton type="button" (click)="add()" icon="pi pi-plus"></button>
+                    <button pButton type="button" (click)="addItem()" icon="pi pi-plus"></button>
                 </div>
             </div>
-            <div [formControlName]="carrinho">
-            <div  class="p-grid p-align-end p-justify-end">
-                    <p-table [columns]="cols" [value]="produtos">
-                        <ng-template pTemplate="header" let-columns>
-                            <tr>
-                                <th *ngFor="let col of columns">
-                                    {{col.header}}
-                                </th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-car let-columns="columns">
-                            <tr>
-                                <td *ngFor="let col of columns">
-                                    {{car[col.field]}}
-                                </td>
-                                <td>
-                                    <button pButton (click)="add(car)" type="button" icon="pi pi-plus"></button>
-                                </td>
-                                <td>
-                                    <button pButton type="button" (click)="deleteItem(car)" icon="pi pi-trash"></button>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                    </div>
+
+            <div class="p-grid p-align-end p-justify-end">
+                <p-table [columns]="cols" [value]="produtos">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                {{col.header}}
+                            </th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                        <tr>
+                            <td>
+                                {{rowData.quantidade}}
+                            </td>
+                            <td>
+                                {{rowData.item.nome}}
+                            </td>
+                            <td>
+                                {{rowData.item.valor}}
+                            </td>
+
+                            <td>
+                                <button pButton type="button" (click)="deleteItem(rowData)" icon="pi pi-trash"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
+
         </p-toolbar>
+
     </form>
 </p-card>

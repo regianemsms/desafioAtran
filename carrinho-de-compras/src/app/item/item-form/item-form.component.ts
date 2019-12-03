@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./item-form.component.css']
 })
 export class ItemComponent implements OnInit {
-
   formulario: FormGroup;
   path = 'item';
   item: Item;
@@ -23,7 +22,7 @@ export class ItemComponent implements OnInit {
     private msgService: MessageService,
     private location: Location,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.formulario = this.createForm();
@@ -33,36 +32,46 @@ export class ItemComponent implements OnInit {
   updateVerify() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
-      this.service.findById(this.path, id).subscribe(
-        data => {
-          this.item = data;
-          this.formulario.patchValue(this.item);
-
-        },
-      );
+      this.service.findById(this.path, id).subscribe(data => {
+        this.item = data;
+        this.formulario.patchValue(this.item);
+      });
     }
   }
 
   private createForm(): FormGroup {
     return this.formBuilder.group({
       id: [null],
-      nome: [null],
-      valor: [null]
+      nome: [null, [Validators.required]],
+      valor: [null, [Validators.required]]
     });
   }
-  salvar() {
-    const valor = this.formulario.get('valor').value;
-    if (valor <= 0) {
-      alert('Valor não pode ser inferior a Zero');
+
+  async salvar() {
+    if (this.formulario.valid) {
+      const valor = this.formulario.get('valor').value;
+      if (valor <= 0) {
+        alert('Valor não pode ser igual ou inferior a Zero');
+      } else {
+        this.service.save(this.path, this.formulario.value).subscribe(
+          data => {
+            this.location.back();
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
     } else {
-      this.service.save(this.path, this.formulario.value).subscribe(
-        data => {
-          this.location.back();
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.validarCampos();
+    }
+  }
+  private validarCampos() {
+    if (
+      this.formulario.get('nome').invalid ||
+      this.formulario.get('valor').invalid
+    ) {
+      alert('Todos os campos são de preenchimento obrigatório');
     }
   }
 }

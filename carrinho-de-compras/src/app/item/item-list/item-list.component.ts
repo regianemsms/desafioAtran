@@ -38,17 +38,15 @@ export class ItemListComponent implements OnInit {
       () => alert('Erro ao buscar usuarios!'));
   }
 
-  update() {
-
-  }
-
-   delete(item: Item) {
+  async delete(item: Item) {
     if (confirm('Deseja realmente excluir este item?')) {
       this.service
         .delete(this.path, item.id)
         .subscribe(
-          async () => ( await this.list,
-          () => alert('Erro ao tentar excluir!')
+          async () => ( this.list(),
+          () => {
+            return alert('Erro ao tentar excluir!');
+          }
         ));
       }
   }}

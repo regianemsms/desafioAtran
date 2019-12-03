@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.altran.desafio.CarrinhoDeComprasApi.exception.UsuarioInexistenteException;
+import com.altran.desafio.CarrinhoDeComprasApi.exception.UsuarioJaExistenteException;
 import com.altran.desafio.CarrinhoDeComprasApi.model.Produto;
 import com.altran.desafio.CarrinhoDeComprasApi.model.Usuario;
 import com.altran.desafio.CarrinhoDeComprasApi.repository.UsuarioRepository;
 import com.altran.desafio.CarrinhoDeComprasApi.services.UsuarioService;
 import com.altran.desafio.CarrinhoDeComprasApi.utils.MessageUtil;
+
+import lombok.Synchronized;
+
 
 /**
  * 
@@ -47,15 +51,33 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	@Override
-	public Usuario save(Usuario usuario) {
+	public @Synchronized Usuario save(Usuario usuario) {
+		verificaNomeUsuarioExistente(usuario);
 		if(!StringUtils.isEmpty(usuario.getId())){
 			usuario = verificarCarrinho(usuario);
 		}
-		return  repository.save(usuario);
+		return repository.save(usuario); 
+	}
+	
+	private void verificaNomeUsuarioExistente(Usuario usuario) {
+		Usuario userDb = repository.findByNome(usuario.getNome());
+		boolean existsUser =userDb != null;
+		boolean update = existsUser && usuario.getId() != null && !usuario.getId().equals(userDb.getId());
+		boolean newy = existsUser && usuario.getId() == null && userDb.getId() != null;
+		
+		if(update || newy) {
+			throw new UsuarioJaExistenteException(message.getMessage("mensagem.erro.usuario.existente"));
+		}
+		
 	}
 	
 
 	private Usuario verificarCarrinho(Usuario usuario) {
+		
+		if(isCarrinhoVazio(usuario)) {
+			return usuario;
+		}
+		
 		Usuario userDb = this.findById(usuario.getId());
 		Produto prodTela = usuario.getCarrinho().getProdutos().get(0);
 		if(userDb.getCarrinho() != null && userDb.getCarrinho().getProdutos() != null) {
@@ -71,17 +93,33 @@ public class UsuarioServiceImpl implements UsuarioService{
 				userDb.getCarrinho().getProdutos().add(prodTela);
 			}
 		}else {
-			userDb.getCarrinho().setProdutos(new ArrayList(Arrays.asList(prodTela)));
+			userDb.getCarrinho().setProdutos(new ArrayList<Produto>(Arrays.asList(prodTela)));
 		}
 		return userDb;
 	}
 	
+	private boolean isCarrinhoVazio(Usuario usuario) {
+		return !(usuario.getCarrinho() != null && usuario.getCarrinho().getProdutos() != null && !usuario.getCarrinho().getProdutos().isEmpty()) ;
+	}
+	
 	@Override
-	public void delete(String id) {
+	public @Synchronized void delete(String id) {
 		if (this.findById(id) != null) {
 			this.repository.deleteById(id);
 		}
 		
+	}
+	
+	@Override
+	public @Synchronized void deleteProduto(String idProduto, String idUsuario) {
+		Usuario usuarioDb = this.findById(idUsuario);
+		for(Produto prod : usuarioDb.getCarrinho().getProdutos()) {
+			if(idProduto.equals(prod.getItem().getId())) {
+				usuarioDb.getCarrinho().getProdutos().remove(prod);
+				break;
+			}
+		}
+		this.repository.save(usuarioDb);
 	}
 
 	@Override

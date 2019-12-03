@@ -2,6 +2,8 @@ package com.altran.desafio.CarrinhoDeComprasApi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
@@ -36,7 +38,7 @@ public class UsuarioController {
 	
 	
 	@PostMapping 
-	public ResponseEntity<Usuario> criar(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario) {
 		return  ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(usuario));
 	}
 	
@@ -50,6 +52,12 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable final String id) {
 		this.service.delete(id);
+	}
+	
+	@DeleteMapping(path = "/{idProduto}/{idUsuario}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteProd(@PathVariable final String idProduto, @PathVariable final String idUsuario) {
+		this.service.deleteProduto(idProduto, idUsuario);
 	}
 	
 	@GetMapping(path = "/{id}")

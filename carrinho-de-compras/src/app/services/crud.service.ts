@@ -23,6 +23,10 @@ export class CrudService {
     return this.http.delete(`${environment.apiUrl}${path}/${id}`);
   }
 
+  deleteProd(path: string, id: string, idUsuario: string): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}${path}/${id}/${idUsuario}`);
+  }
+
   findById(path: string, id: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}${path}/${id}`);
   }

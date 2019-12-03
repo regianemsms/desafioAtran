@@ -25,6 +25,7 @@ import {TableModule} from 'primeng/table';
 import {MessageService} from 'primeng/api';
 import {DropdownModule} from 'primeng/dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {TooltipModule} from 'primeng/tooltip';
 
 
 
@@ -54,7 +55,8 @@ import {MultiSelectModule} from 'primeng/multiselect';
     TabMenuModule,
     TableModule,
     DropdownModule,
-    MultiSelectModule
+    MultiSelectModule,
+    TooltipModule
   ],
   providers: [FormBuilder,
     HttpClient,

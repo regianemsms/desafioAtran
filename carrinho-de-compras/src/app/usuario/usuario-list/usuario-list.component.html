@@ -28,11 +28,11 @@
                         </td>
                         <td>
                             <a [routerLink]="['/usuario',user.id]">
-                                <button pButton type="button" icon="pi pi-user-edit"></button>
+                                <button pButton type="button" icon="pi pi-user-edit" pTooltip="Editar" tooltipPosition="top"></button>
                             </a>
                         </td>
                         <td>
-                            <button pButton type="button" (click)="delete(user)" icon="pi pi-trash"></button>
+                            <button pButton type="button" (click)="delete(user)" pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash"></button>
                         </td>
                     </tr>
                 </ng-template>

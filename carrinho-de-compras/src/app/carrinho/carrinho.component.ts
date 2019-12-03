@@ -1,4 +1,4 @@
-import { element } from 'protractor';
+import { async } from '@angular/core/testing';
 import { Carrinho } from './../model/carrinho.model';
 import { Usuario } from './../model/usuario.model';
 import { Component, OnInit } from '@angular/core';
@@ -25,7 +25,8 @@ export class CarrinhoComponent implements OnInit {
   quantidade: number;
   cols: any[];
   mapItens: Map<number, Item> = new Map();
-  produto : Produto = new Produto;
+  produto: Produto = new Produto();
+  produtos: Produto[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,11 +45,20 @@ export class CarrinhoComponent implements OnInit {
     this.listarUsuarios();
     this.loadTable();
   }
-  existsUser() {
+   existsUser() {
     if (this.formulario.get('usuario').value) {
+     this.popularProdutos();
       return this.formulario.get('usuario').get('id').value ? true : false;
     }
     return false;
+  }
+
+  private popularProdutos() {
+    this.produtos = [];
+    if (this.formulario.get('usuario').get('carrinho').value && this.formulario.get('usuario').get('carrinho').get('produtos')) {
+      this.produtos =  this.formulario.get('usuario').get('carrinho').get('produtos').value;
+      console.log('produtos', this.produtos);
+    }
   }
 
   private createForm(): FormGroup {
@@ -59,7 +69,7 @@ export class CarrinhoComponent implements OnInit {
         email: [null],
         carrinho: this.formBuilder.group({
           produtos: [null]
-        }),   
+        }),
        }),
        quantidade: [null],
        item:  this.formBuilder.group({
@@ -67,7 +77,6 @@ export class CarrinhoComponent implements OnInit {
           nome: [null],
           valor: [null]
       }),
-      mapItens: []
     });
   }
   listarUsuarios() {
@@ -84,7 +93,7 @@ export class CarrinhoComponent implements OnInit {
       () => alert('Erro ao buscar itens!')
     );
   }
-  add() {
+  addItem() {
     this.usuario =  this.formulario.get('usuario').value;
     this.usuario.carrinho = new Carrinho();
     this.usuario.carrinho.produtos = [];
@@ -94,25 +103,44 @@ export class CarrinhoComponent implements OnInit {
     this.usuario.carrinho.produtos = [this.produto];
     this.salvar();
   }
-  
+
+  async deleteItem(produto: Produto) {
+    if (confirm('Deseja realmente excluir este item?')) {
+      this.usuario =  this.formulario.get('usuario').value;
+      this.service
+        .deleteProd(this.pathUsuario, produto.item.id, this.usuario.id)
+        .subscribe(async () => (
+          this.loadTela(this.usuario.id)
+          ,
+          () => {
+            return alert('Erro ao tentar excluir!');
+          }
+        ));
+      }
+    }
   async salvar() {
-    await this.service.save(this.pathUsuario, this.usuario).subscribe(
-      data => {
-        console.log(data);
-      },
+    this.service.save(this.pathUsuario, this.usuario).subscribe(
+      data =>
+        this.loadTela(this.usuario.id)
+      ,
       err => {
         console.log(err);
       }
     );
-     this.formulario.get('usuario').patchValue(this.service.findById(this.pathUsuario, this.usuario.id));
-     console.log(this.formulario.value);
   }
-  
+  loadTela(idUsuario : string) {
+    this.service.findById(this.pathUsuario, idUsuario).subscribe(
+      data => [this.usuario = data,
+        this.formulario.get('usuario').patchValue(this.usuario)
+      ],
+      () => alert('Erro ao buscar usuarios!')
+    );
+  }
   loadTable() {
     this.cols = [
       { field: 'quantidade', header: 'Quantidade' },
-     // { field: 'item', header: 'Nome' },
-      //{ field: 'item', header: 'Valor' }
+      { field: 'item.nome', header: 'Nome' },
+      { field: 'item.valor', header: 'Valor' }
   ];
   }
 }

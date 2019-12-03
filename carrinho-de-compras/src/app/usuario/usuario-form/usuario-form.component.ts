@@ -1,7 +1,7 @@
 import { Usuario } from './../../model/usuario.model';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CrudService } from 'src/app/services/crud.service';
 import { ActivatedRoute } from '@angular/router';
 import {MessageService} from 'primeng/api';
@@ -45,22 +45,31 @@ export class UsuarioComponent implements OnInit {
 
   private createForm(): FormGroup {
     return this.formBuilder.group({
-      id: [null],
-      nome: [null],
-      email: this.formBuilder.control('', [Validators.required, Validators.pattern(this.emailPattern)]),
-      carrinho: [null]
+      id: [],
+      nome: [null, [Validators.required]],
+      email: [null, [Validators.pattern(this.emailPattern)]],
+      carrinho: [],
     });
   }
-  salvar() {
-    this.service.save(this.path, this.formulario.value).subscribe(
-      async data => {
-         console.log(data);
-         await   this.location.back();
-
-      },
-      err => {
-        console.log(err);
+  private validarCampos(){
+    if(this.formulario.get('nome').invalid && this.formulario.get('email').invalid) {
+      alert('Todos os campos são de preenchimento obrigatório');
+    } else {
+      alert('E-mail inválido');
+    }
+  }
+  async salvar() {
+    if (this.formulario.valid) {
+      this.service.save(this.path, this.formulario.value).subscribe(
+        data => {
+          this.location.back();
+        },
+        err => {
+          console.log(err);
+        }
+        );
+      } else {
+        this.validarCampos();
       }
-    );
   }
 }

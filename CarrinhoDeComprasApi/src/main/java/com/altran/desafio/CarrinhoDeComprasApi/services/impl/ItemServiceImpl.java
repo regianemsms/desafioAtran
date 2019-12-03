@@ -12,6 +12,8 @@ import com.altran.desafio.CarrinhoDeComprasApi.repository.ItemRepository;
 import com.altran.desafio.CarrinhoDeComprasApi.services.ItemService;
 import com.altran.desafio.CarrinhoDeComprasApi.utils.MessageUtil;
 
+import lombok.Synchronized;
+
 /**
  * 
  * @author Regiane Mesquita
@@ -43,13 +45,13 @@ public class ItemServiceImpl implements ItemService{
 	}
 	
 	@Override
-	public Item save(Item item) {
+	public @Synchronized Item save(Item item) {
 		return repository.save(item);
 	}
 	
 
 	@Override
-	public void delete(String id) {
+	public @Synchronized void delete(String id) {
 		if (this.findById(id) != null) {
 			this.repository.deleteById(id);
 		}

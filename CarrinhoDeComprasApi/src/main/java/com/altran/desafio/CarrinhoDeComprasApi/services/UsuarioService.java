@@ -16,4 +16,6 @@ public interface UsuarioService {
 	void delete(String id);
     
 	Optional<List<Usuario>> findByName(String name);
+	
+	void deleteProduto(String id, String idUsuario);
 }

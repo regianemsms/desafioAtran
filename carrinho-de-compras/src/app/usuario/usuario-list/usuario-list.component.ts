@@ -38,12 +38,12 @@ export class UsuarioListComponent implements OnInit {
       () => alert('Erro ao buscar usuarios!'));
   }
 
-   delete(usuario: Usuario) {
+  async delete(usuario: Usuario) {
     if (confirm('Deseja realmente excluir este item?')) {
       this.service
         .delete(this.path, usuario.id)
         .subscribe(
-          async () => ( await this.list,
+          () => ( this.list(),
           () => alert('Erro ao tentar excluir!')
         ));
     }
